@@ -1,23 +1,58 @@
-import React, { useState } from "react";
-import {View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet,} from 'react-native';
-import Tarea from "./Tarea";
+const App = () => {
+	const [task, setTask] = useState("");
+	const [tasks, setTasks] = useState([]);
+	const [editIndex, setEditIndex] = useState(-1);
 
-const mostrarBotones = ({item, index}) =>(
-    <View style={styles.tarea}>
-        <Text style={styles.listaItem}>{item}</Text>
-        <View style={styles.botones}>
-            <TouchableOpacity onPress={()=> editarTarea(index)}>
-                <Text style={styles.botonEditar}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={()=> borrarTarea(index)}>
-                <Text style={styles.botonBorrar}>Eliminar</Text>
-            </TouchableOpacity>
-        </View>
-    </View>
-)
+	const handleAddTask = () => {
+		if (task) {
+			if (editIndex !== -1) {
+				// Edit existing task
+				const updatedTasks = [...tasks];
+				updatedTasks[editIndex] = task;
+				setTasks(updatedTasks);
+				setEditIndex(-1);
+			} else {
+				// Add new task
+				setTasks([...tasks, task]);
+			}
+			setTask("");
+		}
+	};
 
-const estructuraLista = () => (
-    <View style={styles.container}>
+	const handleEditTask = (index) => {
+		const taskToEdit = tasks[index];
+		setTask(taskToEdit);
+		setEditIndex(index);
+	};
+
+	const handleDeleteTask = (index) => {
+        const updatedTasks = [...tasks];
+		updatedTasks.splice(index, 1);
+		setTasks(updatedTasks);
+	};
+
+	const renderItem = ({ item, index }) => (
+		<View style={styles.task}>
+			<Text
+				style={styles.itemList}>{item}</Text>
+			<View
+				style={styles.taskButtons}>
+				<TouchableOpacity
+					onPress={() => handleEditTask(index)}>
+					<Text
+						style={styles.editButton}>Edit</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					onPress={() => handleDeleteTask(index)}>
+					<Text
+						style={styles.deleteButton}>Delete</Text>
+				</TouchableOpacity>
+			</View>
+		</View>
+	);
+
+	return (
+		<View style={styles.container}>
 			<Text style={styles.heading}>Geeksforgeeks</Text>
 			<Text style={styles.title}>ToDo App</Text>
 			<TextInput
@@ -39,7 +74,8 @@ const estructuraLista = () => (
 				keyExtractor={(item, index) => index.toString()}
 			/>
 		</View>
-)
+	);
+};
 
 const styles = StyleSheet.create({
 	container: {
@@ -85,23 +121,23 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		fontSize: 18,
 	},
-	listaItem: {
+	itemList: {
 		fontSize: 19,
 	},
-	botones: {
+	taskButtons: {
 		flexDirection: "row",
 	},
-	botonEditar: {
+	editButton: {
 		marginRight: 10,
 		color: "green",
 		fontWeight: "bold",
 		fontSize: 18,
 	},
-	botonBorrar: {
+	deleteButton: {
 		color: "red",
 		fontWeight: "bold",
 		fontSize: 18,
 	},
 });
 
-export default mostrarBotones;
+export default App;

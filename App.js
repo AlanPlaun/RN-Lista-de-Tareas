@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Inicio from './Components/Inicio';
+import mostrarBotones from './Components/Inicio'; 
 //https://github.com/MateoGuevaraAlvarez/reactjsCitas/tree/main/src/components
 
 export default function App() {

@@ -1,0 +1,15 @@
+1. Pantalla de inicio: 
+      La aplicación debe tener una pantalla de inicio con una lista vacía de tareas pendientes y un botón para agregar una nueva tarea.
+2. Agregar tarea: 
+      Al hacer click en el botón de agregar tarea, se debe abrir un modal donde el usuario pueda ingresar el nombre de la tarea y una breve descripción.
+3. Mostrar tareas: 
+      Después de agregar una tarea, esta debe aparecer en la lista en la pantalla de inicio. Cada tarea debe mostrar su nombre y una breve descripción. 
+4. Marcar tarea como completada: 
+      Los usuarios deben poder marcar una tarea como completada al hacer click en un botón junto a cada tarea en la lista.
+      Las tareas completadas deben mostrarse con un estilo diferente para distinguirlas de las tareas pendientes. 
+5. Eliminar tarea: 
+      Los usuarios deben poder eliminar una tarea de la lista al desplazarla hacia un lado o utilizando un botón de eliminación. 
+6. Estado de las tareas: 
+      La aplicación debe mantener el estado de las tareas incluso después de cerrar y volver a abrir la aplicación. 
+7. Estilo y diseño: 
+      Se valorará la creatividad en el diseño y la aplicación de estilos a la interfaz de usuario para que la aplicación se vea atractiva y amigable para el usuario.
