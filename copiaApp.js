@@ -1,66 +1,96 @@
+import React, { useState } from "react";
+import {
+	View,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	FlatList,
+	StyleSheet,
+} from "react-native";
+
+//FALTA
+//MARCAR TAREA COMO COMPLETADA
+//GUARDAR ESTADO DE LAS TAREAS
+//BELLEZA
+
 const App = () => {
 	const [task, setTask] = useState("");
 	const [tasks, setTasks] = useState([]);
 	const [editIndex, setEditIndex] = useState(-1);
 
-	const handleAddTask = () => {
-		if (task) {
-			if (editIndex !== -1) {
-				// Edit existing task
-				const updatedTasks = [...tasks];
-				updatedTasks[editIndex] = task;
-				setTasks(updatedTasks);
-				setEditIndex(-1);
-			} else {
-				// Add new task
-				setTasks([...tasks, task]);
-			}
-			setTask("");
-		}
-	};
+  {/*
+  MODAL
+  const handleAddTask = () => {
+  if (task) {
+        if (editIndex !== -1) {
+          // Edit existing task
+          const updatedTasks = [...tasks];
+          updatedTasks[editIndex] = task;
+          setTasks(updatedTasks);
+          setEditIndex(-1);
+        } else {
+          // Add new task
+          setTasks([...tasks, task]);
+        }
+        setTask("");
+      }
+    };
+  */}
 
-	const handleEditTask = (index) => {
-		const taskToEdit = tasks[index];
-		setTask(taskToEdit);
-		setEditIndex(index);
-	};
+  {/*
+  EDITAR TAREA
+    const handleEditTask = (index) => {
+      const taskToEdit = tasks[index];
+      setTask(taskToEdit);
+      setEditIndex(index);
+    };
+  */}
 
+  {/*
+  BORRAR TAREA
 	const handleDeleteTask = (index) => {
-        const updatedTasks = [...tasks];
+		const updatedTasks = [...tasks];
 		updatedTasks.splice(index, 1);
 		setTasks(updatedTasks);
 	};
+  */}
 
-	const renderItem = ({ item, index }) => (
-		<View style={styles.task}>
-			<Text
-				style={styles.itemList}>{item}</Text>
-			<View
-				style={styles.taskButtons}>
-				<TouchableOpacity
-					onPress={() => handleEditTask(index)}>
-					<Text
-						style={styles.editButton}>Edit</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					onPress={() => handleDeleteTask(index)}>
-					<Text
-						style={styles.deleteButton}>Delete</Text>
-				</TouchableOpacity>
-			</View>
-		</View>
-	);
+  {/*
+  MOSTRAR TAREAS
+    const renderItem = ({ item, index }) => (
+      <View style={styles.task}>
+        <Text
+          style={styles.itemList}>{item}</Text>
+        <View
+          style={styles.taskButtons}>
+          <TouchableOpacity
+            onPress={() => handleEditTask(index)}>
+            <Text
+              style={styles.editButton}>Edit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleDeleteTask(index)}>
+            <Text
+              style={styles.deleteButton}>Delete</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+    */}
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.heading}>Geeksforgeeks</Text>
 			<Text style={styles.title}>ToDo App</Text>
-			<TextInput
+			
+      {/* 
+      CONVERTIR A MODAL 
+        <TextInput
 				style={styles.input}
 				placeholder="Enter task"
 				value={task}
 				onChangeText={(text) => setTask(text)}
-			/>
+			/> 
 			<TouchableOpacity
 				style={styles.addButton}
 				onPress={handleAddTask}>
@@ -68,6 +98,7 @@ const App = () => {
 					{editIndex !== -1 ? "Update Task" : "Add Task"}
 				</Text>
 			</TouchableOpacity>
+      */}
 			<FlatList
 				data={tasks}
 				renderItem={renderItem}
