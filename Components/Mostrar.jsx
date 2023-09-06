@@ -1,5 +1,6 @@
 import handleEditTask from "./Editar";
 import handleDeleteTask from "./Borrar";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 const renderItem = ({ item, index }) => (
     <View style={styles.task}>
