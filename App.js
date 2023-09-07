@@ -13,6 +13,7 @@ import {
 import renderItem from "./Components/Mostrar";
 import handleEditTask from "./Components/Editar";
 import handleDeleteTask from "./Components/Borrar";
+import Modalol from "./Components/Modal";
 
 const App = () => {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -40,7 +41,15 @@ const App = () => {
 
 	return (
 		<View style={styles.centeredView}>
-      <Modal
+			<Pressable
+			  style={[styles.button, styles.buttonOpen]}
+			  onPress={() => setModalVisible(true)}>
+			  <Text style={styles.textStyle}>Show Modal</Text>
+			</Pressable>
+			<Modal />
+		</View>
+
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -72,12 +81,7 @@ const App = () => {
 				data={tasks}
 				renderItem={renderItem}
 				keyExtractor={(item, index) => index.toString()}
-			/>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
+			/> */}
     </View>
 		// <View style={styles.container}>
 		// 	<Text style={styles.heading}>Geeksforgeeks</Text>
