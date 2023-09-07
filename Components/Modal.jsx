@@ -12,42 +12,43 @@ import {
 } from "react-native";
 import renderItem from "./Mostrar";
 
-
-const Modalol = () => {
+const Modalol = (props) => {
     return (
         <View>
             <Modal
                 animationType="slide"
                 transparent={true}
-                visible={modalVisible}
+                visible={props.modalState}
                 onRequestClose={() => {
                     Alert.alert('Modal has been closed.');
-                    setModalVisible(!modalVisible);
+                    props.setModalState(!props.modalState);
                 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <TextInput
                             style={styles.input}
                             placeholder="Enter task"
-                            value={task}
-                            onChangeText={(text) => setTask(text)}
+                            value={props.tarea}
+                            onChangeText={(text) => props.setTarea(text)}
                         />
                         <TouchableOpacity
                             style={styles.addButton}
-                            onPress={handleAddTask}>
+                            onPress={props.AnadirTarea}>
                             <Text style={styles.addButtonText}>
-                                {editIndex !== -1 ? "Update Task" : "Add Task"}
+                                {props.editIndex !== -1 ? "Update Task" : "Add Task"}
                             </Text>
                         </TouchableOpacity>
 
                     </View>
                 </View>
             </Modal>
+            {/* 
+            data tiene que volver a app.js y app tiene mapear los datos y mandarlos a renderItem por props 
             <FlatList
-                data={tasks}
+                data={props.tareas}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
-            />
+            /> */}
         </View>
         )
 

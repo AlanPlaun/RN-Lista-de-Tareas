@@ -1,20 +1,15 @@
-import handleEditTask from "./Editar";
-import handleDeleteTask from "./Borrar";
+
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
-const renderItem = ({ item, index }) => (
+const renderItem = (props ) => (
     <View style={styles.task}>
         <Text
-            style={styles.itemList}>{item}</Text>
+            style={styles.itemList}>{props.tareas}</Text>
         <View
             style={styles.taskButtons}>
             <TouchableOpacity
-                onPress={() => handleEditTask(index)}>
-                <Text
-                    style={styles.editButton}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => handleDeleteTask(index)}>
+                onPress={() => props.borrar(props.tareas.length)}> 
+                {/* SACAR EL ID DEL OBJETO */}
                 <Text
                     style={styles.deleteButton}>Delete</Text>
             </TouchableOpacity>

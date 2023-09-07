@@ -11,8 +11,6 @@ import {
 	Alert
 } from "react-native";
 import renderItem from "./Components/Mostrar";
-import handleEditTask from "./Components/Editar";
-import handleDeleteTask from "./Components/Borrar";
 import Modalol from "./Components/Modal";
 
 const App = () => {
@@ -21,10 +19,23 @@ const App = () => {
 	const [tasks, setTasks] = useState([]);
 	const [editIndex, setEditIndex] = useState(-1);
 
+	const handleDeleteTask = (index) => {
+		const updatedTasks = [...tasks];
+		updatedTasks.splice(index, 1);
+		setTasks(updatedTasks);
+	};
+
+	const handleEditTask = (index) => {
+		const taskToEdit = tasks[index];
+		setTask(taskToEdit);
+		setEditIndex(index);
+	};
+
 	const handleAddTask = () => {
 		if (task) {
 			if (editIndex !== -1) {
 				// Edit existing task
+				//AGREGARLE UN ID AL OBJETO
 				const updatedTasks = [...tasks];
 				updatedTasks[editIndex] = task;
 				setTasks(updatedTasks);
@@ -33,7 +44,7 @@ const App = () => {
 				// Add new task
 				setTasks([...tasks, task]);
 			}
-			setTask("");      
+			setTask("");
 			setModalVisible(false); // Cierra el modal al agregar o actualizar la tarea
 
 		}
@@ -42,47 +53,55 @@ const App = () => {
 	return (
 		<View style={styles.centeredView}>
 			<Pressable
-			  style={[styles.button, styles.buttonOpen]}
-			  onPress={() => setModalVisible(true)}>
-			  <Text style={styles.textStyle}>Show Modal</Text>
+				style={[styles.button, styles.buttonOpen]}
+				onPress={() => setModalVisible(true)}>
+				<Text style={styles.textStyle}>Show Modal</Text>
 			</Pressable>
-			<Modal />
-		</View>
+			<Modalol modalState={modalVisible} setModalState={setModalVisible} tarea={task} setTarea={setTask}
+				tareas={tasks} setTareas={setTasks} AnadirTarea={handleAddTask} index={editIndex} setIndex={setEditIndex} />
+			{tasks.map((p)=> 
+				{
+					return(
+					<renderItem item = {p}/>
+				)
+			}
 
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-			<TextInput
-	 		style={styles.input}
-	 		placeholder="Enter task"
-	 		value={task}
-				onChangeText={(text) => setTask(text)}
-			/>
-	 	<TouchableOpacity
-				style={styles.addButton}
-				onPress={handleAddTask}>
-				<Text style={styles.addButtonText}>
-					{editIndex !== -1 ? "Update Task" : "Add Task"}
-				</Text>
-				
-			</TouchableOpacity>
+				)} 
+
+		</View>
+		/* <Modal
+	animationType="slide"
+	transparent={true}
+	visible={modalVisible}
+	onRequestClose={() => {
+	  Alert.alert('Modal has been closed.');
+	  setModalVisible(!modalVisible);
+	}}>
+	<View style={styles.centeredView}>
+	  <View style={styles.modalView}>
+		<TextInput
+			style={styles.input}
+			placeholder="Enter task"
+			value={task}
+			onChangeText={(text) => setTask(text)}
+		/>
+	  <TouchableOpacity
+			style={styles.addButton}
+			onPress={handleAddTask}>
+			<Text style={styles.addButtonText}>
+				{editIndex !== -1 ? "Update Task" : "Add Task"}
+			</Text>
 			
-          </View>
-        </View>
-      </Modal>	
-	  <FlatList
-				data={tasks}
-				renderItem={renderItem}
-				keyExtractor={(item, index) => index.toString()}
-			/> */}
-    </View>
+		</TouchableOpacity>
+		
+	  </View>
+	</View>
+  </Modal>	
+  <FlatList
+			data={tasks}
+			renderItem={renderItem}
+			keyExtractor={(item, index) => index.toString()}
+		/> */
 		// <View style={styles.container}>
 		// 	<Text style={styles.heading}>Geeksforgeeks</Text>
 		// 	<Text style={styles.title}>ToDo App</Text>
@@ -146,8 +165,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		marginTop: 22,
-	  },
-	  modalView: {
+	},
+	modalView: {
 		margin: 20,
 		backgroundColor: 'white',
 		borderRadius: 20,
@@ -155,33 +174,33 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		shadowColor: '#000',
 		shadowOffset: {
-		  width: 0,
-		  height: 2,
+			width: 0,
+			height: 2,
 		},
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
 		elevation: 5,
-	  },
-	  button: {
+	},
+	button: {
 		borderRadius: 20,
 		padding: 10,
 		elevation: 2,
-	  },
-	  buttonOpen: {
+	},
+	buttonOpen: {
 		backgroundColor: '#F194FF',
-	  },
-	  buttonClose: {
+	},
+	buttonClose: {
 		backgroundColor: '#2196F3',
-	  },
-	  textStyle: {
+	},
+	textStyle: {
 		color: 'white',
 		fontWeight: 'bold',
 		textAlign: 'center',
-	  },
-	  modalText: {
+	},
+	modalText: {
 		marginBottom: 15,
 		textAlign: 'center',
-	  },
-	});
+	},
+});
 
 export default App;
