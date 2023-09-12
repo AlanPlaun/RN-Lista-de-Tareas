@@ -1,18 +1,24 @@
 
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 
-const renderItem = (props ) => (
+const RenderItem = (props) => (
     <View style={styles.task}>
         <Text
-            style={styles.itemList}>{props.tareas}</Text>
+            style={styles.itemList}>{props.item}</Text>
         <View
             style={styles.taskButtons}>
-            <TouchableOpacity
-                onPress={() => props.borrar(props.tareas.length)}> 
+            <Pressable
+                onPress={() => props.borrar(props.item.length)}> 
                 {/* SACAR EL ID DEL OBJETO */}
                 <Text
                     style={styles.deleteButton}>Delete</Text>
-            </TouchableOpacity>
+            </Pressable>
+			<Pressable
+                onPress={() => props.terminar(props.item.length)}> 
+                {/* SACAR EL ID DEL OBJETO */}
+                <Text
+                    style={styles.deleteButton}>Completada</Text>
+            </Pressable>
         </View>
     </View>
 );
@@ -44,4 +50,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default renderItem;
+export default RenderItem;

@@ -1,126 +1,112 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-	View,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	FlatList,
-	StyleSheet,
-	Pressable,
-	Modal,
-	Alert
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  Pressable,
+  Modal,
+  Alert,
 } from "react-native";
-import renderItem from "./Components/Mostrar";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Importa AsyncStorage
+
+import RenderItem from "./Components/Mostrar";
 import Modalol from "./Components/Modal";
 
 const App = () => {
-	const [modalVisible, setModalVisible] = useState(false);
-	const [task, setTask] = useState("");
-	const [tasks, setTasks] = useState([]);
-	const [editIndex, setEditIndex] = useState(-1);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState([]);
+  const [editIndex, setEditIndex] = useState(-1);
 
-	const handleDeleteTask = (index) => {
-		const updatedTasks = [...tasks];
-		updatedTasks.splice(index, 1);
-		setTasks(updatedTasks);
-	};
+  useEffect(() => {
+    // Cargar tareas desde AsyncStorage al cargar la aplicación
+    loadTasks();
+  }, []);
 
-	const handleEditTask = (index) => {
-		const taskToEdit = tasks[index];
-		setTask(taskToEdit);
-		setEditIndex(index);
-	};
+  const saveTasks = async (tasksToSave) => {
+    try {
+      // Guarda las tareas en AsyncStorage como una cadena JSON
+      await AsyncStorage.setItem("tasks", JSON.stringify(tasksToSave));
+    } catch (error) {
+      console.error("Error al guardar las tareas en AsyncStorage: ", error);
+    }
+  };
 
-	const handleAddTask = () => {
-		if (task) {
-			if (editIndex !== -1) {
-				// Edit existing task
-				//AGREGARLE UN ID AL OBJETO
-				const updatedTasks = [...tasks];
-				updatedTasks[editIndex] = task;
-				setTasks(updatedTasks);
-				setEditIndex(-1);
-			} else {
-				// Add new task
-				setTasks([...tasks, task]);
-			}
-			setTask("");
-			setModalVisible(false); // Cierra el modal al agregar o actualizar la tarea
+  const loadTasks = async () => {
+    try {
+      // Carga las tareas desde AsyncStorage y las convierte de nuevo en un array
+      const savedTasks = await AsyncStorage.getItem("tasks");
+      if (savedTasks !== null) {
+        setTasks(JSON.parse(savedTasks));
+      }
+    } catch (error) {
+      console.error("Error al cargar las tareas desde AsyncStorage: ", error);
+    }
+  };
 
-		}
-	};
+  const handleDeleteTask = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks.splice(index, 1);
+    setTasks(updatedTasks);
+    saveTasks(updatedTasks); // Guarda las tareas actualizadas en AsyncStorage
+  };
 
-	return (
-		<View style={styles.centeredView}>
-			<Pressable
-				style={[styles.button, styles.buttonOpen]}
-				onPress={() => setModalVisible(true)}>
-				<Text style={styles.textStyle}>Show Modal</Text>
-			</Pressable>
-			<Modalol modalState={modalVisible} setModalState={setModalVisible} tarea={task} setTarea={setTask}
-				tareas={tasks} setTareas={setTasks} AnadirTarea={handleAddTask} index={editIndex} setIndex={setEditIndex} />
-			{tasks.map((p)=> 
-				{
-					return(
-					<renderItem item = {p}/>
-				)
-			}
+  const handleFinishTask = (index) => {
+    const updatedTasks = [...tasks];
+    updatedTasks.splice(index, 1);
+    setTasks(updatedTasks);
+    saveTasks(updatedTasks); // Guarda las tareas actualizadas en AsyncStorage
+  };
 
-				)} 
+  const handleAddTask = () => {
+    if (task) {
+      if (editIndex !== -1) {
+        const updatedTasks = [...tasks];
+        updatedTasks[editIndex] = task;
+        setTasks(updatedTasks);
+        setEditIndex(-1);
+      } else {
+        setTasks([...tasks, task]);
+      }
+      setTask("");
+      setModalVisible(false);
+      saveTasks([...tasks, task]); // Guarda las tareas actualizadas en AsyncStorage
+    }
+  };
 
-		</View>
-		/* <Modal
-	animationType="slide"
-	transparent={true}
-	visible={modalVisible}
-	onRequestClose={() => {
-	  Alert.alert('Modal has been closed.');
-	  setModalVisible(!modalVisible);
-	}}>
-	<View style={styles.centeredView}>
-	  <View style={styles.modalView}>
-		<TextInput
-			style={styles.input}
-			placeholder="Enter task"
-			value={task}
-			onChangeText={(text) => setTask(text)}
-		/>
-	  <TouchableOpacity
-			style={styles.addButton}
-			onPress={handleAddTask}>
-			<Text style={styles.addButtonText}>
-				{editIndex !== -1 ? "Update Task" : "Add Task"}
-			</Text>
-			
-		</TouchableOpacity>
-		
-	  </View>
-	</View>
-  </Modal>	
-  <FlatList
-			data={tasks}
-			renderItem={renderItem}
-			keyExtractor={(item, index) => index.toString()}
-		/> */
-		// <View style={styles.container}>
-		// 	<Text style={styles.heading}>Geeksforgeeks</Text>
-		// 	<Text style={styles.title}>ToDo App</Text>
-		// 	<Pressable
-		// 		style={styles.input}
-		// 		placeholder="Enter task"
-		// 		value={task}
-		// 		onChangeText={(text) => setTask(text)}
-		// 	/>
-		// 	<TouchableOpacity
-		// 		style={styles.addButton}
-		// 		onPress={handleAddTask}>
-		// 		<Text style={styles.addButtonText}>
-		// 			{editIndex !== -1 ? "Update Task" : "Add Task"}
-		// 		</Text>
-		// 	</TouchableOpacity>
-		// 
-		// </View>
-	);
+  return (
+    <View style={styles.centeredView}>
+      <Pressable
+        style={[styles.button, styles.buttonOpen]}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.textStyle}>Show Modal</Text>
+      </Pressable>
+      <Modalol
+        modalState={modalVisible}
+        setModalState={setModalVisible}
+        tarea={task}
+        setTarea={setTask}
+        tareas={tasks}
+        setTareas={setTasks}
+        AnadirTarea={handleAddTask}
+        index={editIndex}
+        setIndex={setEditIndex}
+      />
+      {tasks.map((p, index) => (
+        <RenderItem
+          key={index.toString()}
+          item={p}
+          borrar={() => handleDeleteTask(index)}
+          terminar={() => handleFinishTask(index)}
+          alt="Delete"
+        />
+      ))}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

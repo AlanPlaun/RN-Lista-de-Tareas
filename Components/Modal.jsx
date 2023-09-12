@@ -3,7 +3,6 @@ import {
     View,
     Text,
     TextInput,
-    TouchableOpacity,
     FlatList,
     StyleSheet,
     Pressable,
@@ -31,13 +30,13 @@ const Modalol = (props) => {
                             value={props.tarea}
                             onChangeText={(text) => props.setTarea(text)}
                         />
-                        <TouchableOpacity
+                        <Pressable
                             style={styles.addButton}
                             onPress={props.AnadirTarea}>
                             <Text style={styles.addButtonText}>
                                 {props.editIndex !== -1 ? "Update Task" : "Add Task"}
                             </Text>
-                        </TouchableOpacity>
+                        </Pressable>
 
                     </View>
                 </View>
