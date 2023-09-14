@@ -10,7 +10,7 @@ import {
   Modal,
   Alert,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Importa AsyncStorage
+// import AsyncStorage from "@react-native-async-storage/async-storage"; // Importa AsyncStorage
 
 import RenderItem from "./Components/Mostrar";
 import Modalol from "./Components/Modal";
@@ -21,44 +21,48 @@ const App = () => {
   const [tasks, setTasks] = useState([]);
   const [editIndex, setEditIndex] = useState(-1);
 
-  useEffect(() => {
-    // Cargar tareas desde AsyncStorage al cargar la aplicación
-    loadTasks();
-  }, []);
+  // useEffect(() => {
+  //   // Cargar tareas desde AsyncStorage al cargar la aplicación
+  //   loadTasks();
+  // }, []);
 
-  const saveTasks = async (tasksToSave) => {
-    try {
-      // Guarda las tareas en AsyncStorage como una cadena JSON
-      await AsyncStorage.setItem("tasks", JSON.stringify(tasksToSave));
-    } catch (error) {
-      console.error("Error al guardar las tareas en AsyncStorage: ", error);
-    }
-  };
+  // const saveTasks = async (tasksToSave) => {
+  //   try {
+  //     // Guarda las tareas en AsyncStorage como una cadena JSON
+  //     await AsyncStorage.setItem("tasks", JSON.stringify(tasksToSave));
+  //   } catch (error) {
+  //     console.error("Error al guardar las tareas en AsyncStorage: ", error);
+  //   }
+  // };
 
-  const loadTasks = async () => {
-    try {
-      // Carga las tareas desde AsyncStorage y las convierte de nuevo en un array
-      const savedTasks = await AsyncStorage.getItem("tasks");
-      if (savedTasks !== null) {
-        setTasks(JSON.parse(savedTasks));
-      }
-    } catch (error) {
-      console.error("Error al cargar las tareas desde AsyncStorage: ", error);
-    }
-  };
+  // const loadTasks = async () => {
+  //   try {
+  //     // Carga las tareas desde AsyncStorage y las convierte de nuevo en un array
+  //     const savedTasks = await AsyncStorage.getItem("tasks");
+  //     if (savedTasks !== null) {
+  //       setTasks(JSON.parse(savedTasks));
+  //     }
+  //   } catch (error) {
+  //     console.error("Error al cargar las tareas desde AsyncStorage: ", error);
+  //   }
+  // };
 
   const handleDeleteTask = (index) => {
     const updatedTasks = [...tasks];
     updatedTasks.splice(index, 1);
     setTasks(updatedTasks);
-    saveTasks(updatedTasks); // Guarda las tareas actualizadas en AsyncStorage
+    // saveTasks(updatedTasks); // Guarda las tareas actualizadas en AsyncStorage
   };
-
+  const styles = StyleSheet.create({
+    negrita: {fontWeight: 'bold'},
+    cursiva: {fontStyle: 'italic'},
+    subrayado: {textDecorationLine: 'underline'}
+})
   const handleFinishTask = (index) => {
-    const updatedTasks = [...tasks];
-    updatedTasks.splice(index, 1);
-    setTasks(updatedTasks);
-    saveTasks(updatedTasks); // Guarda las tareas actualizadas en AsyncStorage
+    return(
+      <text style={styles.subrayado}>{index}</text>
+    )
+    // saveTasks(updatedTasks); // Guarda las tareas actualizadas en AsyncStorage
   };
 
   const handleAddTask = () => {
@@ -73,7 +77,7 @@ const App = () => {
       }
       setTask("");
       setModalVisible(false);
-      saveTasks([...tasks, task]); // Guarda las tareas actualizadas en AsyncStorage
+      // saveTasks([...tasks, task]); // Guarda las tareas actualizadas en AsyncStorage
     }
   };
 

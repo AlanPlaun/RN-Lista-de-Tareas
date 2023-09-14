@@ -15,9 +15,9 @@ const RenderItem = (props) => (
             </Pressable>
 			<Pressable
                 onPress={() => props.terminar(props.item.length)}> 
-                {/* SACAR EL ID DEL OBJETO */}
+                {/* SACAR EL ID DEL OBJETO ssssssssss*/}
                 <Text
-                    style={styles.deleteButton}>Completada</Text>
+                    style={styles.finishButton}>Completada</Text>
             </Pressable>
         </View>
     </View>
@@ -48,6 +48,11 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		fontSize: 18,
 	},
+    finishButton:{
+        color:"green",
+        fontWeight: "bold",
+		fontSize: 18,
+    }
 });
 
 export default RenderItem;
