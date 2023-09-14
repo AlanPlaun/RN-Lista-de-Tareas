@@ -1,10 +1,22 @@
 
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, Pressable, useState} from "react-native";
+const RenderItem = (props) => {
+    // const [isFinished, setIsFinished] = useState(false);
+    function Check({name, isFinished}){
+    if (isFinished =true) {
+        return <li style={styles.subrayado} className="item">{name} ✔</li>;
+    }
+    else{
+    return <li className="item">{name}</li>;
+    }
+    }
 
-const RenderItem = (props) => (
+    return(
     <View style={styles.task}>
-        <Text
-            style={styles.itemList}>{props.item}</Text>
+        <Check style={styles.itemList}
+        name={props.item}
+        isFinished={false}
+        />
         <View
             style={styles.taskButtons}>
             <Pressable
@@ -14,16 +26,18 @@ const RenderItem = (props) => (
                     style={styles.deleteButton}>Delete</Text>
             </Pressable>
 			<Pressable
-                onPress={() => props.terminar(props.item.length)}> 
-                {/* SACAR EL ID DEL OBJETO ssssssssss*/}
+                onPress={() => {Check(props.item)}}> 
                 <Text
                     style={styles.finishButton}>Completada</Text>
             </Pressable>
         </View>
     </View>
-);
+    )
+    }
 
 const styles = StyleSheet.create({
+    subrayado: {textDecorationLine: 'underline'},
+
     task: {
 		flexDirection: "row",
 		justifyContent: "space-between",

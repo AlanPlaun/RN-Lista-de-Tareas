@@ -53,16 +53,12 @@ const App = () => {
     setTasks(updatedTasks);
     // saveTasks(updatedTasks); // Guarda las tareas actualizadas en AsyncStorage
   };
-  const styles = StyleSheet.create({
-    negrita: {fontWeight: 'bold'},
-    cursiva: {fontStyle: 'italic'},
-    subrayado: {textDecorationLine: 'underline'}
-})
+ 
   const handleFinishTask = (index) => {
     return(
       <text style={styles.subrayado}>{index}</text>
     )
-    // saveTasks(updatedTasks); // Guarda las tareas actualizadas en AsyncStorage
+    // saveTasks(updatedTasks); Guarda las tareas actualizadas en AsyncStorage
   };
 
   const handleAddTask = () => {
@@ -119,6 +115,8 @@ const styles = StyleSheet.create({
 		padding: 40,
 		marginTop: 40,
 	},
+  negrita: {fontWeight: 'bold'},
+    cursiva: {fontStyle: 'italic'},
 	title: {
 		fontSize: 24,
 		fontWeight: "bold",
